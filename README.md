@@ -38,7 +38,7 @@ Import jest idempotentny: naturalne klucze tabel aktualizują istniejące rekord
 
 ## Deploy na Vercel
 
-Dodaj zmienne `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `OPENAI_API_KEY` i opcjonalnie `OPENAI_MODEL`. Żaden klucz `service_role` nie jest potrzebny — operacje wykonują się w kontekście zalogowanego użytkownika i zasad RLS.
+Dodaj zmienne `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` i `OPENAI_API_KEY`. Nie ustawiaj jednego modelu na sztywno: agent-router wybiera z zatwierdzonego portfela Luna / Terra / Sol według kosztu, złożoności i ryzyka. Żaden klucz `service_role` nie jest potrzebny — operacje wykonują się w kontekście zalogowanego użytkownika i zasad RLS.
 
 ## Ważne
 
