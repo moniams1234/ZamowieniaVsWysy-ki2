@@ -1,0 +1,39 @@
+name: Migracja danych do Supabase
+
+on:
+  workflow_dispatch:
+    inputs:
+      user_email:
+        description: E-mail użytkownika aplikacji, do którego przypisać dane
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Pobierz nową aplikację
+        uses: actions/checkout@v4
+      - name: Pobierz stare repozytorium z plikami
+        uses: actions/checkout@v4
+        with:
+          repository: moniams1234/Zamowienia_Vs_Wysy-ki
+          path: legacy
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Zainstaluj zależności
+        run: npm ci
+      - name: Zaimportuj dane
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          TARGET_USER_EMAIL: ${{ inputs.user_email }}
+          LEGACY_DIR: ${{ github.workspace }}/legacy
+        run: node scripts/migrate-legacy-data.mjs
